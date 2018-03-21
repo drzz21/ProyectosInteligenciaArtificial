@@ -1,36 +1,18 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""
-=========================================================
-The Iris Dataset
-=========================================================
-This data sets consists of 3 different types of irises'
-(Setosa, Versicolour, and Virginica) petal and sepal
-length, stored in a 150x4 numpy.ndarray
-
-The rows being the samples and the columns being:
-Sepal Length, Sepal Width, Petal Length	and Petal Width.
-
-The below plot uses the first two features.
-See `here <https://en.wikipedia.org/wiki/Iris_flower_data_set>`_ for more
-information on this dataset.
-"""
 print(__doc__)
 
-
-# Code source: Gaël Varoquaux
-# Modified for documentation by Jaques Grobler
-# License: BSD 3 clause
+# Cargamos las librerias utilizadas
 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn import datasets
 from sklearn.decomposition import PCA
 
-# import some data to play with
+# Importamos los datos que vamos a manipular de la bd iris
 iris = datasets.load_iris()
-X = iris.data[:, :2]  # we only take the first two features.
+X = iris.data[:, :2]  # Solo tomamos los primeros dos datos de iris
 y = iris.target
 
 x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
@@ -39,19 +21,19 @@ y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5
 plt.figure(2, figsize=(8, 6))
 plt.clf()
 
-# Plot the training points
+# Graficamos los puntos deseados usando scatter
 plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Set1,
             edgecolor='k')
-plt.xlabel('Sepal length')
-plt.ylabel('Sepal width')
+plt.xlabel('Largo del sepalo')
+plt.ylabel('Ancho del sepalo')
 
 plt.xlim(x_min, x_max)
 plt.ylim(y_min, y_max)
 plt.xticks(())
 plt.yticks(())
 
-# To getter a better understanding of interaction of the dimensions
-# plot the first three PCA dimensions
+# Hacemos un analisis de los componentes principales usando PCA de Python
+# esto sirve para descomponer los valores singulares de los datos para proyectarlos a un espacio dimensional inferior.
 fig = plt.figure(1, figsize=(8, 6))
 ax = Axes3D(fig, elev=-150, azim=110)
 X_reduced = PCA(n_components=3).fit_transform(iris.data)
@@ -65,4 +47,5 @@ ax.w_yaxis.set_ticklabels([])
 ax.set_zlabel("3rd eigenvector")
 ax.w_zaxis.set_ticklabels([])
 
+# Mostramos la imagen de la grafica obtenida
 plt.show()
